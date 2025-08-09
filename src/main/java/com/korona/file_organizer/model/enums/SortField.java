@@ -3,8 +3,7 @@ package com.korona.file_organizer.model.enums;
 
 public enum SortField implements Valued {
     NAME("name"),
-    SALARY("salary"),
-    UNSORTED(null);
+    SALARY("salary");
 
     private final String field;
 

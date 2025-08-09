@@ -8,7 +8,7 @@ import com.korona.file_organizer.util.ArgParserUtil;
 
 import java.util.Optional;
 
-public class OutputHandler implements ArgHandler {
+public class OutputTypeHandler implements ArgHandler {
 
     @Override
     public boolean support(String arg) {
@@ -26,6 +26,7 @@ public class OutputHandler implements ArgHandler {
             throw new IllegalArgumentException("Недопустимый способ вывода статистики: " + value);
         }
 
-        config.setOutput(new PositionalParam<>(outputType.get(), index));
+        config.setOutputTypeDefaulted(false);
+        config.setOutputType(new PositionalParam<>(outputType.get(), index));
     }
 }

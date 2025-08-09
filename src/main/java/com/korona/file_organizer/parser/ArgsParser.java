@@ -2,11 +2,6 @@ package com.korona.file_organizer.parser;
 
 import com.korona.file_organizer.model.Config;
 import com.korona.file_organizer.parser.handlers.ArgHandler;
-import com.korona.file_organizer.parser.handlers.OrderHandler;
-import com.korona.file_organizer.parser.handlers.OutputHandler;
-import com.korona.file_organizer.parser.handlers.OutputPathHandler;
-import com.korona.file_organizer.parser.handlers.SortHandler;
-import com.korona.file_organizer.parser.handlers.StatHandler;
 
 import java.util.List;
 

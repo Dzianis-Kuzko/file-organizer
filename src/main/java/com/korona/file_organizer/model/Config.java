@@ -16,6 +16,14 @@ public class Config {
     private SortField sortBy;
     private SortOrder order;
     private boolean statEnabled;
-    private PositionalParam<OutputType> output;
+    private PositionalParam<OutputType> outputType;
+    private boolean outputTypeDefaulted;
     private PositionalParam<Path> outputPath;
+
+    public Config() {
+        this.outputType= new PositionalParam<>();
+        this.outputType.setValue(OutputType.CONSOLE);
+        this.outputTypeDefaulted = true;
+        this.outputPath= new PositionalParam<>();
+    }
 }
