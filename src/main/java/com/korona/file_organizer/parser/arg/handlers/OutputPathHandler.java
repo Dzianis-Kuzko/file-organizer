@@ -1,7 +1,6 @@
-package com.korona.file_organizer.parser.handlers;
+package com.korona.file_organizer.parser.arg.handlers;
 
 import com.korona.file_organizer.model.Config;
-import com.korona.file_organizer.model.PositionalParam;
 import com.korona.file_organizer.model.enums.OutputPathFlag;
 import com.korona.file_organizer.util.ArgParserUtil;
 
@@ -17,6 +16,7 @@ public class OutputPathHandler implements ArgHandler {
     @Override
     public void handle(String[] args, int index, Config config) {
         Path path = Path.of(ArgParserUtil.extractValue(args[index]));
-        config.setOutputPath(new PositionalParam<Path>(path, index));
+        config.getOutputPath().setValue(path);
+        config.getOutputPath().setPosition(index);
     }
 }

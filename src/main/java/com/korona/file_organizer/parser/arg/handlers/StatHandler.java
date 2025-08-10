@@ -1,4 +1,4 @@
-package com.korona.file_organizer.parser.handlers;
+package com.korona.file_organizer.parser.arg.handlers;
 
 import com.korona.file_organizer.model.Config;
 import com.korona.file_organizer.model.enums.StatFlag;

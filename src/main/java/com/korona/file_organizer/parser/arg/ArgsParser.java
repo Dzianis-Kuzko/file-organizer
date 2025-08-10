@@ -1,7 +1,7 @@
-package com.korona.file_organizer.parser;
+package com.korona.file_organizer.parser.arg;
 
 import com.korona.file_organizer.model.Config;
-import com.korona.file_organizer.parser.handlers.ArgHandler;
+import com.korona.file_organizer.parser.arg.handlers.ArgHandler;
 
 import java.util.List;
 

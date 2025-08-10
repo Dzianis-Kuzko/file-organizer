@@ -1,7 +1,6 @@
-package com.korona.file_organizer.parser.handlers;
+package com.korona.file_organizer.parser.arg.handlers;
 
 import com.korona.file_organizer.model.Config;
-import com.korona.file_organizer.model.PositionalParam;
 import com.korona.file_organizer.model.enums.OutputFlag;
 import com.korona.file_organizer.model.enums.OutputType;
 import com.korona.file_organizer.util.ArgParserUtil;
@@ -27,6 +26,7 @@ public class OutputTypeHandler implements ArgHandler {
         }
 
         config.setOutputTypeDefaulted(false);
-        config.setOutputType(new PositionalParam<>(outputType.get(), index));
+        config.getOutputType().setValue(outputType.get());
+        config.getOutputPath().setPosition(index);
     }
 }
