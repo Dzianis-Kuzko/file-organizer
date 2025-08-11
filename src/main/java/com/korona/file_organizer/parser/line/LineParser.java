@@ -1,46 +1,45 @@
 package com.korona.file_organizer.parser.line;
 
-import com.korona.file_organizer.model.Employee;
-import com.korona.file_organizer.model.Manager;
 import com.korona.file_organizer.model.Worker;
+import com.korona.file_organizer.parser.line.handlers.WorkerLineHandler;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 public class LineParser {
-    private static final String SEPARATOR = ",";
-    private static final int EXPECTED_PARTS = 5;
+    private final static String SEPARATOR = ",";
+    private final static int EXPECTED_PARTS = 5;
 
-    public Optional<Worker> tryParseLine(String line) {
+    private final List<WorkerLineHandler> handlers;
+
+    public LineParser(List<WorkerLineHandler> handlers) {
+        this.handlers = handlers;
+    }
+
+    public Optional<Worker> parse(String line) {
+        Optional<Worker> workerResult = Optional.empty();
 
         if (line == null || line.trim().isEmpty()) {
-            return Optional.empty();
+            return workerResult;
         }
 
-        String[] parts = line.split(SEPARATOR, -1);
+        String[] parts = line.split(SEPARATOR);
         if (parts.length != EXPECTED_PARTS) {
-            return Optional.empty();
+            return workerResult;
         }
 
-        try {
-            String workerType = parts[0].trim();
-            int id = Integer.parseInt(parts[1].trim());
-            String name = parts[2].trim();
-            String salaryStr = parts[3].trim();
-            String referenceStr = parts[4].trim();
-
-            BigDecimal salary = salaryStr.isEmpty() ? null : new BigDecimal(salaryStr);
-
-            if ("Manager".equalsIgnoreCase(workerType)) {
-                String departmentName = referenceStr;
-                return Optional.of(new Manager(id, name, salary, departmentName));
-            } else if ("Employee".equalsIgnoreCase(workerType)) {
-                int managerId = Integer.parseInt(referenceStr);
-                return Optional.of(new Employee(id, name, salary, managerId));
+        String type = parts[0].trim();
+        for (WorkerLineHandler handler : handlers) {
+            if (handler.supports(type)) {
+                try {
+                    workerResult = Optional.of(handler.handle(parts));
+                    return workerResult;
+                } catch (Exception e) {
+                    return Optional.empty();
+                }
             }
-        } catch (NumberFormatException e) {
-            return Optional.empty();
         }
-        return null;
+
+        return workerResult;
     }
 }
