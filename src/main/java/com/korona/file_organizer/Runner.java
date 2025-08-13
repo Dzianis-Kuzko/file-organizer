@@ -1,10 +1,15 @@
 package com.korona.file_organizer;
 
-import com.korona.file_organizer.controller.Controller;
+import com.korona.file_organizer.file.FileFinder;
+import com.korona.file_organizer.file.FileReader;
 import com.korona.file_organizer.model.Config;
+import com.korona.file_organizer.model.DepartmentsData;
+import com.korona.file_organizer.model.InvalidData;
 import com.korona.file_organizer.parser.arg.ArgsParser;
 import com.korona.file_organizer.parser.arg.factory.ArgHandlerFactory;
-import com.korona.file_organizer.service.WorkerService;
+import com.korona.file_organizer.parser.line.LineParser;
+import com.korona.file_organizer.parser.line.factory.WorkerLineHandlerFactory;
+import com.korona.file_organizer.service.FileDataLoadingService;
 import com.korona.file_organizer.validation.ConfigValidator;
 import com.korona.file_organizer.validation.factory.ConfigValidatorFactory;
 
@@ -19,11 +24,17 @@ public class Runner {
             ConfigValidator validator = new ConfigValidator(validatorFactory.createRules());
             validator.validate(config);
 
-            WorkerService workerService = new WorkerService();
-            Controller controller = new Controller(workerService);
-            controller.run(config);
+            FileFinder fileFinder = new FileFinder();
+            FileReader fileReader = new FileReader();
+            LineParser lineParser = new LineParser(new WorkerLineHandlerFactory().createWorkerLineHandlers());
+            FileDataLoadingService fileDataLoadingService = new FileDataLoadingService(fileFinder, fileReader,lineParser);
+            fileDataLoadingService.loadAndValidateData();
 
-
+            System.out.println(DepartmentsData.employeesByManagerId);
+            System.out.println("---------------------------------");
+            System.out.println(DepartmentsData.managerByDepartmentName);
+            System.out.println("---------------------------------");
+            System.out.println(InvalidData.invalidWorker);
             System.out.println(config);
         } catch (IllegalArgumentException e) {
             System.err.println("Ошибка параметров: " + e.getMessage());

@@ -1,7 +1,7 @@
 package com.korona.file_organizer.validation.rules;
 
 import com.korona.file_organizer.model.Config;
-import com.korona.file_organizer.validation.ValidationException;
+import com.korona.file_organizer.exceptions.ValidationException;
 
 public interface ValidationRule {
     void validate(Config config) throws ValidationException;

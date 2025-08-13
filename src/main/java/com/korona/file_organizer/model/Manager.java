@@ -5,11 +5,20 @@ import lombok.Getter;
 import java.math.BigDecimal;
 
 @Getter
-public class Manager extends Worker {
-    private String department;
 
-    public Manager(int id, String name, BigDecimal salary, String department) {
+public class Manager extends Worker {
+    private String departmentName;
+
+    public Manager(int id, String name, BigDecimal salary, String departmentName) {
         super(id, name, salary);
-        this.department = department;
+        this.departmentName = departmentName;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Manager{" + super.toString() +
+                "department='" + departmentName + '\'' +
+                '}';
     }
 }
