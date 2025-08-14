@@ -1,7 +1,7 @@
 package com.korona.file_organizer.parser.line.factory;
 
-import com.korona.file_organizer.parser.line.handlers.EmployeeLineHandler;
-import com.korona.file_organizer.parser.line.handlers.ManagerLineHandler;
+import com.korona.file_organizer.parser.line.handlers.impl.EmployeeLineHandler;
+import com.korona.file_organizer.parser.line.handlers.impl.ManagerLineHandler;
 import com.korona.file_organizer.parser.line.handlers.WorkerLineHandler;
 
 import java.util.List;

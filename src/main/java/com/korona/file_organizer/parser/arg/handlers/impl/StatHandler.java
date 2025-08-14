@@ -1,7 +1,8 @@
-package com.korona.file_organizer.parser.arg.handlers;
+package com.korona.file_organizer.parser.arg.handlers.impl;
 
 import com.korona.file_organizer.model.Config;
 import com.korona.file_organizer.model.enums.StatFlag;
+import com.korona.file_organizer.parser.arg.handlers.ArgHandler;
 
 import java.util.Arrays;
 

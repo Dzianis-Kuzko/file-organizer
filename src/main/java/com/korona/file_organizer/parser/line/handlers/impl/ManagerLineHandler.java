@@ -1,11 +1,12 @@
-package com.korona.file_organizer.parser.line.handlers;
+package com.korona.file_organizer.parser.line.handlers.impl;
 
 import com.korona.file_organizer.model.Manager;
 import com.korona.file_organizer.model.Worker;
+import com.korona.file_organizer.parser.line.handlers.WorkerLineHandler;
 
 import java.math.BigDecimal;
 
-public class ManagerLineHandler implements WorkerLineHandler{
+public class ManagerLineHandler implements WorkerLineHandler {
     @Override
     public boolean supports(String type) {
         return "Manager".equals(type);

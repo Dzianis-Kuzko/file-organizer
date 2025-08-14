@@ -1,11 +1,11 @@
 package com.korona.file_organizer.parser.arg.factory;
 
 import com.korona.file_organizer.parser.arg.handlers.ArgHandler;
-import com.korona.file_organizer.parser.arg.handlers.OrderHandler;
-import com.korona.file_organizer.parser.arg.handlers.OutputPathHandler;
-import com.korona.file_organizer.parser.arg.handlers.OutputTypeHandler;
-import com.korona.file_organizer.parser.arg.handlers.SortHandler;
-import com.korona.file_organizer.parser.arg.handlers.StatHandler;
+import com.korona.file_organizer.parser.arg.handlers.impl.OrderHandler;
+import com.korona.file_organizer.parser.arg.handlers.impl.OutputPathHandler;
+import com.korona.file_organizer.parser.arg.handlers.impl.OutputTypeHandler;
+import com.korona.file_organizer.parser.arg.handlers.impl.SortHandler;
+import com.korona.file_organizer.parser.arg.handlers.impl.StatHandler;
 
 import java.util.List;
 
