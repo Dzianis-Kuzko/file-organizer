@@ -4,9 +4,7 @@ import com.korona.file_organizer.controller.FileDataLoadingController;
 import com.korona.file_organizer.file.FileFinder;
 import com.korona.file_organizer.file.FileReader;
 import com.korona.file_organizer.model.Config;
-import com.korona.file_organizer.model.DepartmentsData;
 import com.korona.file_organizer.model.Employee;
-import com.korona.file_organizer.model.InvalidData;
 import com.korona.file_organizer.model.Manager;
 import com.korona.file_organizer.parser.arg.ArgsParser;
 import com.korona.file_organizer.parser.arg.factory.ArgHandlerFactory;
@@ -24,7 +22,7 @@ import com.korona.file_organizer.validation.ConfigValidator;
 import com.korona.file_organizer.validation.factory.ConfigValidatorFactory;
 
 public class Runner {
-    public static void main(String[] args, FileReader fileReader1) {
+    public static void main(String[] args) {
         try {
 
             FileFinder fileFinder = new FileFinder();
@@ -57,11 +55,11 @@ public class Runner {
             validator.validate(config);
 
 
-            System.out.println(DepartmentsData.employeesByManagerId);
+            System.out.println(((EmployeeRepository) employeeRepo).getEmployeesByManagerId());
             System.out.println("---------------------------------");
-            System.out.println(DepartmentsData.managerByDepartmentName);
+            System.out.println(((ManagerRepository) managerRepo).getManagersByDepartmentName());
             System.out.println("---------------------------------");
-            System.out.println(InvalidData.invalidWorker);
+            System.out.println(((InvalidDataRepository) invalidDataRepo).getInvalidData());
             System.out.println(config);
         } catch (IllegalArgumentException e) {
             System.err.println("Ошибка параметров: " + e.getMessage());
