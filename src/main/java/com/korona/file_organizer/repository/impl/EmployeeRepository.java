@@ -17,4 +17,10 @@ public class EmployeeRepository implements Repository<Employee> {
     public void add(Employee employee) {
         employeesByManagerId.computeIfAbsent(employee.getManagerId(), k -> new ArrayList<>()).add(employee);
     }
+
+    public List<Employee> getEmployees(int managerId) {
+        return new ArrayList<>(
+                employeesByManagerId.getOrDefault(managerId, new ArrayList<>())
+        );
+    }
 }
