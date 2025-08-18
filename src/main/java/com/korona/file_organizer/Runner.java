@@ -11,13 +11,14 @@ import com.korona.file_organizer.parser.arg.ArgsParser;
 import com.korona.file_organizer.parser.arg.factory.ArgHandlerFactory;
 import com.korona.file_organizer.parser.line.LineParser;
 import com.korona.file_organizer.parser.line.factory.WorkerLineHandlerFactory;
-import com.korona.file_organizer.repository.impl.EmployeeRepository;
-import com.korona.file_organizer.repository.impl.InvalidDataRepository;
-import com.korona.file_organizer.repository.impl.ManagerRepository;
-import com.korona.file_organizer.service.impl.DepartmentService;
-import com.korona.file_organizer.service.impl.EmployeeService;
-import com.korona.file_organizer.service.impl.InvalidDataService;
-import com.korona.file_organizer.service.impl.ManagerService;
+import com.korona.file_organizer.repository.DepartmentRepository;
+import com.korona.file_organizer.repository.InvalidDataRepository;
+import com.korona.file_organizer.repository.PendingDataRepository;
+import com.korona.file_organizer.service.ComparatorFactory;
+import com.korona.file_organizer.service.DepartmentService;
+import com.korona.file_organizer.service.InvalidDataService;
+import com.korona.file_organizer.service.PendingDataService;
+import com.korona.file_organizer.validation.SalaryValidator;
 
 public class Runner {
     public static void main(String[] args) {
@@ -26,15 +27,11 @@ public class Runner {
         Config config = argsParser.parse(args);
 
 
-        EmployeeRepository employeeRepo = new EmployeeRepository();
-        ManagerRepository managerRepo = new ManagerRepository();
         InvalidDataRepository invalidDataRepo = new InvalidDataRepository();
-
-        ManagerService managerService = new ManagerService(managerRepo);
-        EmployeeService employeeService = new EmployeeService(employeeRepo, managerService);
+        DepartmentRepository departmentRepo = new DepartmentRepository();
 
         InvalidDataService invalidDataService = new InvalidDataService(invalidDataRepo);
-        DepartmentService departmentService = new DepartmentService(managerService, employeeService, config);
+        DepartmentService departmentService = new DepartmentService(config, departmentRepo);
 
         FileFinder fileFinder = new FileFinder();
         FileReader fileReader = new FileReader();
@@ -45,59 +42,21 @@ public class Runner {
                 fileFinder,
                 fileReader,
                 lineParser,
-                employeeService,
-                managerService,
-                invalidDataService);
-        FileDepartmentWriterController departmentWriterController = new FileDepartmentWriterController(departmentService, managerService);
-        FileInvalidDataWriterController invalidDataWriterController = new FileInvalidDataWriterController(invalidDataService, employeeService);
+                invalidDataService,
+                new PendingDataService(new PendingDataRepository(), new SalaryValidator()),
+                departmentService
+
+        );
+
+        ComparatorFactory comparatorFactory = new ComparatorFactory();
+        FileDepartmentWriterController departmentWriterController = new FileDepartmentWriterController(departmentService, comparatorFactory, config);
+        FileInvalidDataWriterController invalidDataWriterController = new FileInvalidDataWriterController(invalidDataService);
 
         new AppController(fileDataLoadingController, departmentWriterController, invalidDataWriterController).process(args);
 
 
         try {
-//            ArgHandlerFactory argHandlerFactory = new ArgHandlerFactory();
-//            ArgsParser argsParser = new ArgsParser(argHandlerFactory.createHandlers());
-//            Config config = argsParser.parse(args);
-//
-//            FileFinder fileFinder = new FileFinder();
-//            FileReader fileReader = new FileReader();
-//            LineParser lineParser = new LineParser(new WorkerLineHandlerFactory().createWorkerLineHandlers());
-//
-//            EmployeeRepository employeeRepo = new EmployeeRepository();
-//            ManagerRepository managerRepo = new ManagerRepository();
-//            InvalidDataRepository invalidDataRepo = new InvalidDataRepository();
-//
-//            EmployeeService employeeService = new EmployeeService(employeeRepo);
-//            ManagerService managerService = new ManagerService(managerRepo);
-//            InvalidDataService invalidDataService = new InvalidDataService(invalidDataRepo);
-//            DepartmentService departmentService = new DepartmentService(managerService, employeeService, config);
-//
-//            FileDataLoadingController fileDataLoadingController = new FileDataLoadingController(
-//                    fileFinder,
-//                    fileReader,
-//                    lineParser,
-//                    employeeService,
-//                    managerService,
-//                    invalidDataService);
-//            fileDataLoadingController.loadData();
-//
-//
-//            ConfigValidatorFactory validatorFactory = new ConfigValidatorFactory();
-//            ConfigValidator validator = new ConfigValidator(validatorFactory.createRules());
-//            validator.validate(config);
-//
-//            FileDepartmentWriterController departmentWriterController = new FileDepartmentWriterController();
-//            FileInvalidDataWriterController invalidDataWriterController = new FileInvalidDataWriterController(invalidDataService);
-//            AppController appController = new AppController(employeeService, managerService, departmentService, departmentWriterController, invalidDataWriterController);
-//            appController.process();
-//
-//
-//            System.out.println(((EmployeeRepository) employeeRepo).getEmployeesByManagerId());
-//            System.out.println("---------------------------------");
-//            System.out.println(((ManagerRepository) managerRepo).getManagers());
-//            System.out.println("---------------------------------");
-//            System.out.println(((InvalidDataRepository) invalidDataRepo).getInvalidData());
-//            System.out.println(config);
+
         } catch (IllegalArgumentException e) {
             System.err.println("Ошибка параметров: " + e.getMessage());
             e.printStackTrace();

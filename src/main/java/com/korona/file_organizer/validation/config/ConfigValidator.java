@@ -1,7 +1,7 @@
-package com.korona.file_organizer.validation;
+package com.korona.file_organizer.validation.config;
 
 import com.korona.file_organizer.model.Config;
-import com.korona.file_organizer.validation.rules.ValidationRule;
+import com.korona.file_organizer.validation.config.rules.ValidationRule;
 
 import java.util.List;
 

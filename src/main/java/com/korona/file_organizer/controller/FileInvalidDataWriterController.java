@@ -2,12 +2,9 @@ package com.korona.file_organizer.controller;
 
 import com.korona.file_organizer.constant.ProjectConstant;
 import com.korona.file_organizer.file.FileWriter;
-import com.korona.file_organizer.mapper.EmployeeMapper;
 import com.korona.file_organizer.mapper.InvalidDataMapper;
-import com.korona.file_organizer.model.Employee;
 import com.korona.file_organizer.model.InvalidData;
-import com.korona.file_organizer.service.impl.EmployeeService;
-import com.korona.file_organizer.service.impl.InvalidDataService;
+import com.korona.file_organizer.service.InvalidDataService;
 import lombok.AllArgsConstructor;
 
 import java.nio.file.Path;
@@ -16,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class FileInvalidDataWriterController {
     private final InvalidDataService invalidDataService;
-    private final EmployeeService employeeService;
 
     public void writeInvalidData() {
         List<InvalidData> invalidDataList = invalidDataService.getAllInvalidData();
@@ -39,9 +35,5 @@ public class FileInvalidDataWriterController {
             fileWriter.writeLine(InvalidDataMapper.mapToString(invalidData));
         }
 
-        List<Employee> employees = employeeService.getEmployeesWithoutManager();
-        for (Employee employee : employees) {
-            fileWriter.writeLine(EmployeeMapper.mapToString(employee));
-        }
     }
 }

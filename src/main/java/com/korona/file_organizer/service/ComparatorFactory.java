@@ -1,4 +1,4 @@
-package com.korona.file_organizer.service.impl;
+package com.korona.file_organizer.service;
 
 import com.korona.file_organizer.model.Config;
 import com.korona.file_organizer.model.Employee;

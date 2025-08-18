@@ -1,4 +1,4 @@
-package com.korona.file_organizer.repository.impl;
+package com.korona.file_organizer.repository;
 
 import com.korona.file_organizer.model.InvalidData;
 

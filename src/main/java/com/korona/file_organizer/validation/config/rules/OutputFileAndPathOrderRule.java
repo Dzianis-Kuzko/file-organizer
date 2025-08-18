@@ -1,4 +1,4 @@
-package com.korona.file_organizer.validation.rules;
+package com.korona.file_organizer.validation.config.rules;
 
 import com.korona.file_organizer.model.Config;
 import com.korona.file_organizer.exceptions.ValidationException;

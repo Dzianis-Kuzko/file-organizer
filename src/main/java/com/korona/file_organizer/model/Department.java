@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class Department {
-    private String name;
+    private String departmentName;
     private  Manager manager;
     private List<Employee> employees;
 }
