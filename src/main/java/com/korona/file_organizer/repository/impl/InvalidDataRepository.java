@@ -1,17 +1,19 @@
 package com.korona.file_organizer.repository.impl;
 
-import com.korona.file_organizer.repository.Repository;
-import lombok.Getter;
+import com.korona.file_organizer.model.InvalidData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-public class InvalidDataRepository implements Repository<String> {
-    private final List<String> invalidData = new ArrayList<>();
 
-    @Override
-    public void add(String invalidString) {
-        invalidData.add(invalidString);
+public class InvalidDataRepository {
+    private final List<InvalidData> invalidDataList = new ArrayList<>();
+
+    public void add(InvalidData invalidData) {
+        invalidDataList.add(invalidData);
+    }
+
+    public List<InvalidData> getAllInvalidData() {
+        return invalidDataList;
     }
 }

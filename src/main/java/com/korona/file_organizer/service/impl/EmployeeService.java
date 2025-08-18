@@ -8,10 +8,12 @@ import lombok.AllArgsConstructor;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @AllArgsConstructor
 public class EmployeeService implements Service<Employee> {
     private final EmployeeRepository employeeRepository;
+    private final ManagerService managerService;
 
     @Override
     public Optional<Employee> add(Employee employee) {
@@ -19,14 +21,25 @@ public class EmployeeService implements Service<Employee> {
         return Optional.of(employee);
     }
 
-    public List<Employee> getEmployees(int managerId) {
+    public List<Employee> getEmployeesByManagerId(int managerId) {
         return employeeRepository.getEmployees(managerId);
     }
 
 
     public List<Employee> getSortedEmployees(int managerId, Comparator<Employee> comparator) {
-        List<Employee> employees = getEmployees(managerId);
+        List<Employee> employees = getEmployeesByManagerId(managerId);
         employees.sort(comparator);
         return employees;
+    }
+
+    public List<Employee> getEmployeesWithoutManager() {
+        return employeeRepository.getAllManagerIdsWithEmployees().stream()
+                .filter(managerId -> !managerService.getAllManagerIds().contains(managerId))
+                .flatMap(managerId -> employeeRepository.getEmployees(managerId).stream())
+                .toList();
+    }
+
+    public Set<Integer> getAllManagerIdsWithEmployees() {
+        return employeeRepository.getAllManagerIdsWithEmployees();
     }
 }

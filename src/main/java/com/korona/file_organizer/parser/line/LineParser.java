@@ -17,29 +17,29 @@ public class LineParser {
     }
 
     public Optional<Worker> parse(String line) {
-        Optional<Worker> workerResult = Optional.empty();
+        Optional<Worker> worker = Optional.empty();
 
         if (line == null || line.trim().isEmpty()) {
-            return workerResult;
+            return worker;
         }
 
         String[] parts = line.split(SEPARATOR);
         if (parts.length != EXPECTED_PARTS) {
-            return workerResult;
+            return worker;
         }
 
         String type = parts[0].trim();
         for (WorkerLineHandler handler : handlers) {
             if (handler.supports(type)) {
                 try {
-                    workerResult = Optional.of(handler.handle(parts));
-                    return workerResult;
+                    worker = Optional.of(handler.handle(parts));
+                    return worker;
                 } catch (Exception e) {
                     return Optional.empty();
                 }
             }
         }
 
-        return workerResult;
+        return worker;
     }
 }

@@ -2,14 +2,14 @@ package com.korona.file_organizer.repository.impl;
 
 import com.korona.file_organizer.model.Employee;
 import com.korona.file_organizer.repository.Repository;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-@Getter
+
 public class EmployeeRepository implements Repository<Employee> {
     private final Map<Integer, List<Employee>> employeesByManagerId = new HashMap<>();
 
@@ -22,5 +22,9 @@ public class EmployeeRepository implements Repository<Employee> {
         return new ArrayList<>(
                 employeesByManagerId.getOrDefault(managerId, new ArrayList<>())
         );
+    }
+
+    public Set<Integer> getAllManagerIdsWithEmployees() {
+        return employeesByManagerId.keySet();
     }
 }

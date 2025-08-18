@@ -1,18 +1,26 @@
 package com.korona.file_organizer.repository.impl;
 
 import com.korona.file_organizer.model.Manager;
-import com.korona.file_organizer.repository.Repository;
-import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-@Getter
-public class ManagerRepository implements Repository<Manager> {
-    private final Map<String, Manager> managersByDepartmentName = new HashMap<String, Manager>();
 
-    @Override
+public class ManagerRepository {
+    private final Map<Integer, Manager> managers = new HashMap<>();
+
+
     public void add(Manager manager) {
-        managersByDepartmentName.put(manager.getDepartmentName(), manager);
+        managers.put(manager.getId(), manager);
+    }
+
+    public List<Manager> getAllManagers() {
+        return managers.values().stream().toList();
+    }
+
+    public Set<Integer> getAllManagerIds() {
+        return managers.keySet();
     }
 }
