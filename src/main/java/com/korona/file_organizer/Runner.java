@@ -4,6 +4,7 @@ import com.korona.file_organizer.controller.AppController;
 import com.korona.file_organizer.controller.FileDataLoadingController;
 import com.korona.file_organizer.controller.FileDepartmentWriterController;
 import com.korona.file_organizer.controller.FileInvalidDataWriterController;
+import com.korona.file_organizer.controller.StatsWriterController;
 import com.korona.file_organizer.file.FileFinder;
 import com.korona.file_organizer.file.FileReader;
 import com.korona.file_organizer.model.Config;
@@ -16,6 +17,7 @@ import com.korona.file_organizer.repository.InvalidDataRepository;
 import com.korona.file_organizer.repository.PendingDataRepository;
 import com.korona.file_organizer.service.ComparatorFactory;
 import com.korona.file_organizer.service.DepartmentService;
+import com.korona.file_organizer.service.DepartmentStatsService;
 import com.korona.file_organizer.service.InvalidDataService;
 import com.korona.file_organizer.service.PendingDataService;
 import com.korona.file_organizer.validation.SalaryValidator;
@@ -32,6 +34,7 @@ public class Runner {
 
         InvalidDataService invalidDataService = new InvalidDataService(invalidDataRepo);
         DepartmentService departmentService = new DepartmentService(config, departmentRepo);
+        DepartmentStatsService departmentStatsService = new DepartmentStatsService();
 
         FileFinder fileFinder = new FileFinder();
         FileReader fileReader = new FileReader();
@@ -51,8 +54,9 @@ public class Runner {
         ComparatorFactory comparatorFactory = new ComparatorFactory();
         FileDepartmentWriterController departmentWriterController = new FileDepartmentWriterController(departmentService, comparatorFactory, config);
         FileInvalidDataWriterController invalidDataWriterController = new FileInvalidDataWriterController(invalidDataService);
+        StatsWriterController statsWriterController = new StatsWriterController(departmentService, departmentStatsService, config);
 
-        new AppController(fileDataLoadingController, departmentWriterController, invalidDataWriterController).process(args);
+        new AppController(fileDataLoadingController, departmentWriterController, invalidDataWriterController, statsWriterController, config).process(args);
 
 
         try {

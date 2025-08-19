@@ -1,7 +1,7 @@
 package com.korona.file_organizer.controller;
 
 import com.korona.file_organizer.constant.ProjectConstant;
-import com.korona.file_organizer.file.FileWriter;
+import com.korona.file_organizer.file.writer.impl.FileWriter;
 import com.korona.file_organizer.mapper.EmployeeMapper;
 import com.korona.file_organizer.mapper.ManagerMapper;
 import com.korona.file_organizer.model.Config;
@@ -44,13 +44,16 @@ public class FileDepartmentWriterController {
 
         // сотрудники
         List<Employee> employees = department.getEmployees();
-        if (config.getSortBy() != null) {
-            Comparator<Employee> comparator = comparatorFactory.getComparator(config);
-            employees.sort(comparator);
+        if (employees != null) {
+            if (config.getSortBy() != null) {
+                Comparator<Employee> comparator = comparatorFactory.getComparator(config);
+                employees.sort(comparator);
+            }
+
+            for (Employee employee : employees) {
+                fileWriter.writeLine(EmployeeMapper.mapToString(employee));
+            }
         }
 
-        for (Employee employee : employees) {
-            fileWriter.writeLine(EmployeeMapper.mapToString(employee));
-        }
     }
 }

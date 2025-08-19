@@ -1,7 +1,7 @@
 package com.korona.file_organizer.controller;
 
 import com.korona.file_organizer.constant.ProjectConstant;
-import com.korona.file_organizer.file.FileWriter;
+import com.korona.file_organizer.file.writer.impl.FileWriter;
 import com.korona.file_organizer.mapper.InvalidDataMapper;
 import com.korona.file_organizer.model.InvalidData;
 import com.korona.file_organizer.service.InvalidDataService;
