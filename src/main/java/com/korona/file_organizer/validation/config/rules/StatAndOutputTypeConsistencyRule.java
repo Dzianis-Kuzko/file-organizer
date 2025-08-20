@@ -1,6 +1,6 @@
 package com.korona.file_organizer.validation.config.rules;
 
-import com.korona.file_organizer.model.Config;
+import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.exceptions.ValidationException;
 
 public class StatAndOutputTypeConsistencyRule implements ValidationRule {

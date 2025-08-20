@@ -1,4 +1,4 @@
-package com.korona.file_organizer.file;
+package com.korona.file_organizer.reader;
 
 import com.korona.file_organizer.exceptions.InvalidPathException;
 

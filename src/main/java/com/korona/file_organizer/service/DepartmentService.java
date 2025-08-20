@@ -1,6 +1,6 @@
 package com.korona.file_organizer.service;
 
-import com.korona.file_organizer.model.Config;
+import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.model.Department;
 import com.korona.file_organizer.repository.DepartmentRepository;
 import lombok.AllArgsConstructor;

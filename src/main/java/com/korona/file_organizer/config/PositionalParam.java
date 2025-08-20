@@ -1,4 +1,4 @@
-package com.korona.file_organizer.model;
+package com.korona.file_organizer.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

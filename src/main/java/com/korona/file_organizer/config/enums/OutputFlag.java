@@ -1,4 +1,4 @@
-package com.korona.file_organizer.model.enums;
+package com.korona.file_organizer.config.enums;
 
 public enum OutputFlag implements Valued {
     LONG("--output"),

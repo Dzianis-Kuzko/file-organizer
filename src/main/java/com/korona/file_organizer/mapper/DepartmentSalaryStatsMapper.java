@@ -2,9 +2,16 @@ package com.korona.file_organizer.mapper;
 
 import com.korona.file_organizer.model.DepartmentSalaryStats;
 
-public class DepartmentSalaryStatsMapper {
+public final class DepartmentSalaryStatsMapper {
+    private static final String TEMPLATE = "%s, %.2f, %.2f, %.2f";
+
+    private DepartmentSalaryStatsMapper() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
+
     public static String mapToString(DepartmentSalaryStats departmentSalaryStats) {
-        return String.format("%s, %.2f, %.2f, %.2f",
+        return String.format(TEMPLATE,
                 departmentSalaryStats.getDepartmentName(),
                 departmentSalaryStats.getMin(),
                 departmentSalaryStats.getMax(),

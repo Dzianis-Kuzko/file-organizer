@@ -1,12 +1,12 @@
-package com.korona.file_organizer.model.enums;
+package com.korona.file_organizer.config.enums;
 
-public enum OutputType implements Valued {
+public enum OutputTypeForStats implements Valued {
     FILE("file"),
     CONSOLE("console");
 
     private final String type;
 
-    OutputType(String type) {
+    OutputTypeForStats(String type) {
         this.type = type;
     }
 

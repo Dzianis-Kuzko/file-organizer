@@ -1,9 +1,9 @@
 package com.korona.file_organizer.parser.arg.handlers;
 
-import com.korona.file_organizer.model.Config;
+import com.korona.file_organizer.config.Config;
 
 public interface ArgHandler {
-    boolean support(String arg);
 
-    void handle(String[] args, int index, Config config);
+    void handle(String key, String value, Config config, int index);
+
 }

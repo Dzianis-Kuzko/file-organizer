@@ -1,35 +1,31 @@
 package com.korona.file_organizer.parser.arg;
 
-import com.korona.file_organizer.model.Config;
+import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.parser.arg.handlers.ArgHandler;
+import lombok.AllArgsConstructor;
 
-import java.util.List;
+import java.util.Map;
 
+@AllArgsConstructor
 public class ArgsParser {
-    private final List<ArgHandler> handlers;
+    public static final String KEY_VALUE_SEPARATOR = "=";
 
-    public ArgsParser(List<ArgHandler> handlers) {
-        this.handlers = handlers;
-    }
+    private final Map<String, ArgHandler> handlers;
 
     public Config parse(String[] args) {
         Config config = new Config();
 
         for (int i = 0; i < args.length; i++) {
-            String arg = args[i];
-            boolean handled = false;
+            String[] keyValue = args[i].split(KEY_VALUE_SEPARATOR, 2);
+            String key = keyValue[0];
+            String value = keyValue.length > 1 ? keyValue[1] : null;
 
-            for (ArgHandler handler : handlers) {
-                if (handler.support(arg)) {
-                    handler.handle(args, i, config);
-                    handled = true;
-                    break;
-                }
+            ArgHandler handler = handlers.get(key);
+            if (handler == null) {
+                throw new IllegalArgumentException("Неизвестный параметр: " + key);
             }
 
-            if (!handled) {
-                throw new IllegalArgumentException("Неизвестный параметр: " + arg);
-            }
+            handler.handle(key, value, config, i);
         }
 
         return config;

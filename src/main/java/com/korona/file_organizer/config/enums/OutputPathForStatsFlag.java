@@ -1,11 +1,11 @@
-package com.korona.file_organizer.model.enums;
+package com.korona.file_organizer.config.enums;
 
-public enum OutputPathFlag implements Valued {
+public enum OutputPathForStatsFlag implements Valued {
     LONG("--path");
 
     private final String flag;
 
-    OutputPathFlag(String flag) {
+    OutputPathForStatsFlag(String flag) {
         this.flag = flag;
     }
 

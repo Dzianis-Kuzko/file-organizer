@@ -1,12 +1,12 @@
 package com.korona.file_organizer.controller;
 
-import com.korona.file_organizer.file.writer.OutputWriter;
-import com.korona.file_organizer.file.writer.impl.ConsoleWriter;
-import com.korona.file_organizer.file.writer.impl.FileWriter;
+import com.korona.file_organizer.writer.OutputWriter;
+import com.korona.file_organizer.writer.impl.ConsoleWriter;
+import com.korona.file_organizer.writer.impl.FileWriter;
 import com.korona.file_organizer.mapper.DepartmentSalaryStatsMapper;
-import com.korona.file_organizer.model.Config;
+import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.model.DepartmentSalaryStats;
-import com.korona.file_organizer.model.enums.OutputType;
+import com.korona.file_organizer.config.enums.OutputTypeForStats;
 import com.korona.file_organizer.service.DepartmentService;
 import com.korona.file_organizer.service.DepartmentStatsService;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,8 @@ import java.util.Comparator;
 
 @AllArgsConstructor
 public class StatsWriterController {
+    public static final String HEADER_FOR_STATS = "department, min, max, mid";
+
     private final DepartmentService departmentService;
     private final DepartmentStatsService departmentStatsService;
     private final Config config;
@@ -22,7 +24,7 @@ public class StatsWriterController {
     public void writeStatistics() {
 
         try (OutputWriter writer = createWriter()) {
-            writer.writeLine("department, min, max, mid");
+            writer.writeLine(HEADER_FOR_STATS);
 
             departmentService.getAllDepartments()
                     .stream()
@@ -33,9 +35,8 @@ public class StatsWriterController {
         }
     }
 
-
     private OutputWriter createWriter() {
-        if (config.getOutputType().getValue() == OutputType.FILE) {
+        if (config.getOutputType().getValue() == OutputTypeForStats.FILE) {
             return new FileWriter(config.getOutputPath().getValue());
         } else {
             return new ConsoleWriter();

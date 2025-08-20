@@ -1,6 +1,6 @@
-package com.korona.file_organizer.file.writer.impl;
+package com.korona.file_organizer.writer.impl;
 
-import com.korona.file_organizer.file.writer.OutputWriter;
+import com.korona.file_organizer.writer.OutputWriter;
 
 import java.io.IOException;
 import java.io.PrintWriter;

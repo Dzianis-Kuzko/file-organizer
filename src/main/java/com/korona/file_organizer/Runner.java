@@ -1,33 +1,33 @@
 package com.korona.file_organizer;
 
+import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.controller.AppController;
-import com.korona.file_organizer.controller.FileDataLoadingController;
-import com.korona.file_organizer.controller.FileDepartmentWriterController;
-import com.korona.file_organizer.controller.FileInvalidDataWriterController;
+import com.korona.file_organizer.controller.DataLoadingController;
+import com.korona.file_organizer.controller.DepartmentWriterController;
+import com.korona.file_organizer.controller.InvalidDataWriterController;
 import com.korona.file_organizer.controller.StatsWriterController;
-import com.korona.file_organizer.file.FileFinder;
-import com.korona.file_organizer.file.FileReader;
-import com.korona.file_organizer.model.Config;
 import com.korona.file_organizer.parser.arg.ArgsParser;
 import com.korona.file_organizer.parser.arg.factory.ArgHandlerFactory;
 import com.korona.file_organizer.parser.line.LineParser;
 import com.korona.file_organizer.parser.line.factory.WorkerLineHandlerFactory;
+import com.korona.file_organizer.reader.FileFinder;
+import com.korona.file_organizer.reader.FileReader;
 import com.korona.file_organizer.repository.DepartmentRepository;
 import com.korona.file_organizer.repository.InvalidDataRepository;
 import com.korona.file_organizer.repository.PendingDataRepository;
-import com.korona.file_organizer.service.ComparatorFactory;
 import com.korona.file_organizer.service.DepartmentService;
 import com.korona.file_organizer.service.DepartmentStatsService;
 import com.korona.file_organizer.service.InvalidDataService;
 import com.korona.file_organizer.service.PendingDataService;
 import com.korona.file_organizer.validation.SalaryValidator;
+import com.korona.file_organizer.validation.config.ConfigValidator;
+import com.korona.file_organizer.validation.config.factory.ConfigValidatorFactory;
 
 public class Runner {
     public static void main(String[] args) {
-        ArgHandlerFactory argHandlerFactory = new ArgHandlerFactory();
-        ArgsParser argsParser = new ArgsParser(argHandlerFactory.createHandlers());
+        ArgsParser argsParser = new ArgsParser(ArgHandlerFactory.createHandlers());
         Config config = argsParser.parse(args);
-
+        new ConfigValidator(new ConfigValidatorFactory().createRules()).validate(config);
 
         InvalidDataRepository invalidDataRepo = new InvalidDataRepository();
         DepartmentRepository departmentRepo = new DepartmentRepository();
@@ -41,7 +41,7 @@ public class Runner {
         LineParser lineParser = new LineParser(new WorkerLineHandlerFactory().createWorkerLineHandlers());
 
 
-        FileDataLoadingController fileDataLoadingController = new FileDataLoadingController(
+        DataLoadingController dataLoadingController = new DataLoadingController(
                 fileFinder,
                 fileReader,
                 lineParser,
@@ -51,12 +51,11 @@ public class Runner {
 
         );
 
-        ComparatorFactory comparatorFactory = new ComparatorFactory();
-        FileDepartmentWriterController departmentWriterController = new FileDepartmentWriterController(departmentService, comparatorFactory, config);
-        FileInvalidDataWriterController invalidDataWriterController = new FileInvalidDataWriterController(invalidDataService);
+        DepartmentWriterController departmentWriterController = new DepartmentWriterController(departmentService, config);
+        InvalidDataWriterController invalidDataWriterController = new InvalidDataWriterController(invalidDataService);
         StatsWriterController statsWriterController = new StatsWriterController(departmentService, departmentStatsService, config);
 
-        new AppController(fileDataLoadingController, departmentWriterController, invalidDataWriterController, statsWriterController, config).process(args);
+        new AppController(dataLoadingController, departmentWriterController, invalidDataWriterController, statsWriterController, config).process();
 
 
         try {

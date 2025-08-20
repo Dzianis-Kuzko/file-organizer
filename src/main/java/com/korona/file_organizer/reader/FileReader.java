@@ -1,4 +1,4 @@
-package com.korona.file_organizer.file;
+package com.korona.file_organizer.reader;
 
 import java.io.IOException;
 import java.nio.file.Files;

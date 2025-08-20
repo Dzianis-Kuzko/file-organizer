@@ -1,15 +1,16 @@
 package com.korona.file_organizer.service;
 
-import com.korona.file_organizer.model.Config;
+import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.model.Employee;
-import com.korona.file_organizer.model.enums.SortOrder;
+import com.korona.file_organizer.config.enums.SortOrder;
 
 import java.util.Comparator;
+import java.util.Optional;
 
 public class ComparatorFactory {
-    public static Comparator<Employee> getComparator(Config config) {
+    public static Optional<Comparator<Employee>> getComparator(Config config) {
         if (config.getSortBy() == null) {
-            return null;
+            return Optional.empty();
         }
 
         Comparator<Employee> comparator;
@@ -23,6 +24,6 @@ public class ComparatorFactory {
             comparator = comparator.reversed();
         }
 
-        return comparator;
+        return Optional.of(comparator);
     }
 }
