@@ -2,44 +2,46 @@ package com.korona.file_organizer.parser.line;
 
 import com.korona.file_organizer.model.Worker;
 import com.korona.file_organizer.parser.line.handlers.WorkerLineHandler;
+import lombok.AllArgsConstructor;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Optional;
 
+
+@AllArgsConstructor
 public class LineParser {
-    private final static String SEPARATOR = ",";
-    private final static int EXPECTED_PARTS = 5;
+    private static final String SEPARATOR = ",";
+    private static final int EXPECTED_PARTS = 5;
 
-    private final List<WorkerLineHandler> handlers;
+    private final Map<String, WorkerLineHandler> handlers;
 
-    public LineParser(List<WorkerLineHandler> handlers) {
-        this.handlers = handlers;
-    }
+    /**
+     * Parses a line into a Worker object if the format is valid and a handler exists.
+     */
 
     public Optional<Worker> parse(String line) {
-        Optional<Worker> worker = Optional.empty();
-
-        if (line == null || line.trim().isEmpty()) {
-            return worker;
+        if (line == null || line.isBlank()) {
+            return Optional.empty();
         }
 
-        String[] parts = line.split(SEPARATOR);
+        String[] parts = Arrays.stream(line.split(SEPARATOR))
+                .map(String::trim)
+                .toArray(String[]::new);
+
         if (parts.length != EXPECTED_PARTS) {
-            return worker;
+            return Optional.empty();
         }
 
-        String type = parts[0].trim();
-        for (WorkerLineHandler handler : handlers) {
-            if (handler.supports(type)) {
-                try {
-                    worker = Optional.of(handler.handle(parts));
-                    return worker;
-                } catch (Exception e) {
-                    return Optional.empty();
-                }
-            }
+        WorkerLineHandler handler = handlers.get(parts[0]);
+        if (handler == null) {
+            return Optional.empty();
         }
 
-        return worker;
+        try {
+            return Optional.of(handler.handle(parts));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 }

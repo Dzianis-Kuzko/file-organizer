@@ -1,8 +1,8 @@
 package com.korona.file_organizer.config;
 
-import com.korona.file_organizer.config.enums.OutputTypeForStats;
-import com.korona.file_organizer.config.enums.SortField;
-import com.korona.file_organizer.config.enums.SortOrder;
+import com.korona.file_organizer.config.enums.impl.OutputTypeForStats;
+import com.korona.file_organizer.config.enums.impl.SortField;
+import com.korona.file_organizer.config.enums.impl.SortOrder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,14 +14,14 @@ public class Config {
     private SortField sortBy;
     private SortOrder order;
     private boolean statEnabled;
-    private PositionalParam<OutputTypeForStats> outputType;
-    private boolean outputTypeDefaulted;
-    private PositionalParam<Path> outputPath;
+    private PositionalParam<OutputTypeForStats> outputTypeForStats;
+    private boolean outputTypeForStatsDefaulted;
+    private PositionalParam<Path> outputPathForStats;
 
     public Config() {
-        this.outputType= new PositionalParam<>();
-        this.outputType.setValue(OutputTypeForStats.CONSOLE);
-        this.outputTypeDefaulted = true;
-        this.outputPath= new PositionalParam<>();
+        this.outputTypeForStats = new PositionalParam<>();
+        this.outputTypeForStats.setValue(OutputTypeForStats.CONSOLE);
+        this.outputTypeForStatsDefaulted = true;
+        this.outputPathForStats = new PositionalParam<>();
     }
 }

@@ -9,5 +9,4 @@ public class StatsHandler implements ArgHandler {
     public void handle(String key, String value, Config config, int index) {
         config.setStatEnabled(true);
     }
-
 }

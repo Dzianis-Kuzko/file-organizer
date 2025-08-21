@@ -1,11 +1,11 @@
 package com.korona.file_organizer.parser.arg.factory;
 
-import com.korona.file_organizer.config.enums.OrderFlag;
-import com.korona.file_organizer.config.enums.OutputPathForStatsFlag;
-import com.korona.file_organizer.config.enums.OutputTypeForStats;
-import com.korona.file_organizer.config.enums.SortFlag;
-import com.korona.file_organizer.config.enums.StatsFlag;
-import com.korona.file_organizer.config.enums.Valued;
+import com.korona.file_organizer.config.enums.impl.OrderFlag;
+import com.korona.file_organizer.config.enums.impl.OutputPathForStatsFlag;
+import com.korona.file_organizer.config.enums.impl.OutputTypeForStats;
+import com.korona.file_organizer.config.enums.impl.SortFlag;
+import com.korona.file_organizer.config.enums.impl.StatsFlag;
+import com.korona.file_organizer.config.enums.impl.Valued;
 import com.korona.file_organizer.parser.arg.handlers.ArgHandler;
 import com.korona.file_organizer.parser.arg.handlers.impl.OrderHandler;
 import com.korona.file_organizer.parser.arg.handlers.impl.OutputPathForStatsHandler;

@@ -6,7 +6,7 @@ import com.korona.file_organizer.writer.impl.FileWriter;
 import com.korona.file_organizer.mapper.DepartmentSalaryStatsMapper;
 import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.model.DepartmentSalaryStats;
-import com.korona.file_organizer.config.enums.OutputTypeForStats;
+import com.korona.file_organizer.config.enums.impl.OutputTypeForStats;
 import com.korona.file_organizer.service.DepartmentService;
 import com.korona.file_organizer.service.DepartmentStatsService;
 import lombok.AllArgsConstructor;
@@ -36,8 +36,8 @@ public class StatsWriterController {
     }
 
     private OutputWriter createWriter() {
-        if (config.getOutputType().getValue() == OutputTypeForStats.FILE) {
-            return new FileWriter(config.getOutputPath().getValue());
+        if (config.getOutputTypeForStats().getValue() == OutputTypeForStats.FILE) {
+            return new FileWriter(config.getOutputPathForStats().getValue());
         } else {
             return new ConsoleWriter();
         }

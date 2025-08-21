@@ -1,4 +1,4 @@
-package com.korona.file_organizer.config.enums;
+package com.korona.file_organizer.config.enums.impl;
 
 
 public enum SortOrder implements Valued {

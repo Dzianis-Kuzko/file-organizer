@@ -6,12 +6,22 @@ import lombok.AllArgsConstructor;
 
 import java.util.Map;
 
+/**
+ * Parses command-line arguments and delegates processing to corresponding {@link ArgHandler}.
+ */
+
 @AllArgsConstructor
 public class ArgsParser {
     public static final String KEY_VALUE_SEPARATOR = "=";
 
     private final Map<String, ArgHandler> handlers;
 
+    /**
+     * Parses command-line arguments and builds a {@link Config} object.
+     *
+     * @return the filled {@link Config}
+     * @throws IllegalArgumentException if an unknown parameter is provided
+     */
     public Config parse(String[] args) {
         Config config = new Config();
 
@@ -22,7 +32,7 @@ public class ArgsParser {
 
             ArgHandler handler = handlers.get(key);
             if (handler == null) {
-                throw new IllegalArgumentException("Неизвестный параметр: " + key);
+                throw new IllegalArgumentException("Unknown parameter: " + key);
             }
 
             handler.handle(key, value, config, i);

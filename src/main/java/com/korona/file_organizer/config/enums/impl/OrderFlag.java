@@ -1,11 +1,12 @@
-package com.korona.file_organizer.config.enums;
+package com.korona.file_organizer.config.enums.impl;
 
-public enum StatsFlag implements Valued {
-    LONG("--stat");
+
+public enum OrderFlag implements Valued {
+    LONG("--order");
 
     private final String flag;
 
-    StatsFlag(String flag) {
+    OrderFlag(String flag) {
         this.flag = flag;
     }
 

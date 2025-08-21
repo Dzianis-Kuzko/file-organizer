@@ -1,6 +1,6 @@
 package com.korona.file_organizer.util;
 
-import com.korona.file_organizer.config.enums.Valued;
+import com.korona.file_organizer.config.enums.impl.Valued;
 
 import java.util.Arrays;
 import java.util.Optional;

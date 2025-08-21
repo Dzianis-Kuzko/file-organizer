@@ -6,7 +6,7 @@ public final class DepartmentSalaryStatsMapper {
     private static final String TEMPLATE = "%s, %.2f, %.2f, %.2f";
 
     private DepartmentSalaryStatsMapper() {
-        throw new UnsupportedOperationException("Utility class");
+        throw new UnsupportedOperationException("Utility class, should not be instantiated");
     }
 
 

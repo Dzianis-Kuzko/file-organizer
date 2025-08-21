@@ -1,20 +1,24 @@
 package com.korona.file_organizer.validation.config.factory;
 
-import com.korona.file_organizer.validation.config.rules.OutputFileAndPathConsistencyRule;
-import com.korona.file_organizer.validation.config.rules.OutputFileAndPathOrderRule;
-import com.korona.file_organizer.validation.config.rules.SortAndOrderConsistencyRule;
-import com.korona.file_organizer.validation.config.rules.StatAndOutputTypeConsistencyRule;
 import com.korona.file_organizer.validation.config.rules.ValidationRule;
+import com.korona.file_organizer.validation.config.rules.impl.OutputFileForStatsAndPathConsistencyRule;
+import com.korona.file_organizer.validation.config.rules.impl.OutputFileForStatsAndPathOrderRule;
+import com.korona.file_organizer.validation.config.rules.impl.SortAndOrderConsistencyRule;
+import com.korona.file_organizer.validation.config.rules.impl.StatsAndOutputTypeConsistencyRule;
 
 import java.util.List;
 
-public class ConfigValidatorFactory {
-    public List<ValidationRule> createRules() {
+public final class ConfigValidatorFactory {
+    private ConfigValidatorFactory() {
+        throw new UnsupportedOperationException("Utility class, should not be instantiated");
+    }
+
+    public static List<ValidationRule> createRules() {
         return List.of(
                 new SortAndOrderConsistencyRule(),
-                new StatAndOutputTypeConsistencyRule(),
-                new OutputFileAndPathConsistencyRule(),
-                new OutputFileAndPathOrderRule()
+                new StatsAndOutputTypeConsistencyRule(),
+                new OutputFileForStatsAndPathConsistencyRule(),
+                new OutputFileForStatsAndPathOrderRule()
         );
     }
 }

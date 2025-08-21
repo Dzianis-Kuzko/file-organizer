@@ -27,7 +27,11 @@ public class Runner {
     public static void main(String[] args) {
         ArgsParser argsParser = new ArgsParser(ArgHandlerFactory.createHandlers());
         Config config = argsParser.parse(args);
-        new ConfigValidator(new ConfigValidatorFactory().createRules()).validate(config);
+
+        ConfigValidator configValidator = new ConfigValidator(ConfigValidatorFactory.createRules());
+        configValidator.validate(config);
+
+
 
         InvalidDataRepository invalidDataRepo = new InvalidDataRepository();
         DepartmentRepository departmentRepo = new DepartmentRepository();
@@ -38,7 +42,7 @@ public class Runner {
 
         FileFinder fileFinder = new FileFinder();
         FileReader fileReader = new FileReader();
-        LineParser lineParser = new LineParser(new WorkerLineHandlerFactory().createWorkerLineHandlers());
+        LineParser lineParser = new LineParser(WorkerLineHandlerFactory.createWorkerLineHandlers());
 
 
         DataLoadingController dataLoadingController = new DataLoadingController(

@@ -1,7 +1,7 @@
 package com.korona.file_organizer.parser.arg.handlers.impl;
 
 import com.korona.file_organizer.config.Config;
-import com.korona.file_organizer.config.enums.OutputTypeForStats;
+import com.korona.file_organizer.config.enums.impl.OutputTypeForStats;
 import com.korona.file_organizer.parser.arg.handlers.ArgHandler;
 import com.korona.file_organizer.util.ArgParserUtil;
 
@@ -15,12 +15,11 @@ public class OutputTypeForStatsHandler implements ArgHandler {
         Optional<OutputTypeForStats> outputType = ArgParserUtil.tryParseValue(value, OutputTypeForStats.class);
 
         if (outputType.isEmpty()) {
-            throw new IllegalArgumentException("Недопустимый способ вывода статистики: " + value);
+            throw new IllegalArgumentException("Unsupported output type for statistics: " + value);
         }
 
-        config.setOutputTypeDefaulted(false);
-        config.getOutputType().setValue(outputType.get());
-        config.getOutputPath().setPosition(index);
+        config.setOutputTypeForStatsDefaulted(false);
+        config.getOutputTypeForStats().setValue(outputType.get());
+        config.getOutputPathForStats().setPosition(index);
     }
-
 }

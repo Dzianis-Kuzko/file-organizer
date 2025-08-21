@@ -46,5 +46,4 @@ public class PendingDataService {
         return pendingDataRepository.getAllEmployees();
     }
 
-
 }
