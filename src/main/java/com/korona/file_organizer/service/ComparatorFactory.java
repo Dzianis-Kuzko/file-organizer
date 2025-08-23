@@ -1,8 +1,8 @@
 package com.korona.file_organizer.service;
 
 import com.korona.file_organizer.config.Config;
-import com.korona.file_organizer.model.Employee;
 import com.korona.file_organizer.config.enums.impl.SortOrder;
+import com.korona.file_organizer.model.Employee;
 
 import java.util.Comparator;
 import java.util.Optional;

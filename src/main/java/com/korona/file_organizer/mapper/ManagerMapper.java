@@ -1,11 +1,12 @@
 package com.korona.file_organizer.mapper;
 
 import com.korona.file_organizer.model.Manager;
+import com.korona.file_organizer.model.WorkerPosition;
 
 import java.math.BigDecimal;
 
 public final class ManagerMapper {
-    private static final String TEMPLATE = "Manager,%d,%s,%s";
+    private static final String TEMPLATE = "%s,%d,%s,%s";
 
     private ManagerMapper() {
         throw new UnsupportedOperationException("Utility class, should not be instantiated");
@@ -13,6 +14,7 @@ public final class ManagerMapper {
 
     public static String mapToString(Manager manager) {
         return String.format(TEMPLATE,
+                WorkerPosition.MANAGER.getPosition(),
                 manager.getId(),
                 manager.getName(),
                 manager.getSalary()

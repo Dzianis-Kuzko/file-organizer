@@ -1,6 +1,7 @@
 package com.korona.file_organizer.parser.line;
 
 import com.korona.file_organizer.model.Worker;
+import com.korona.file_organizer.parser.Parser;
 import com.korona.file_organizer.parser.line.handlers.WorkerLineHandler;
 import lombok.AllArgsConstructor;
 
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 
 @AllArgsConstructor
-public class LineParser {
+public class LineParser implements Parser<String, Optional<Worker>> {
     private static final String SEPARATOR = ",";
     private static final int EXPECTED_PARTS = 5;
 

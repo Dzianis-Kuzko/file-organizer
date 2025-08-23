@@ -1,7 +1,7 @@
 package com.korona.file_organizer.validation.config.rules.impl;
 
 import com.korona.file_organizer.config.Config;
-import com.korona.file_organizer.exceptions.ValidationException;
+import com.korona.file_organizer.exception.ValidationException;
 import com.korona.file_organizer.validation.config.rules.ValidationRule;
 
 public class StatsAndOutputTypeConsistencyRule implements ValidationRule {
@@ -13,7 +13,7 @@ public class StatsAndOutputTypeConsistencyRule implements ValidationRule {
 
         if (!isStatEnabled && !isOutputTypeDefaulted) {
             throw new ValidationException(
-                    "The type of statistics output cannot be specified without enabling statistics.");
+                    "Error. The type of statistics output cannot be specified without enabling statistics.");
         }
     }
 }

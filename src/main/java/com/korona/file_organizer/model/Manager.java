@@ -5,7 +5,6 @@ import lombok.Getter;
 import java.math.BigDecimal;
 
 @Getter
-
 public class Manager extends Worker {
     private String departmentName;
 
@@ -14,11 +13,4 @@ public class Manager extends Worker {
         this.departmentName = departmentName;
     }
 
-    @Override
-    public String toString() {
-
-        return "Manager{" + super.toString() +
-                "department='" + departmentName + '\'' +
-                '}';
-    }
 }

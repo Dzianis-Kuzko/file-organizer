@@ -1,12 +1,12 @@
 package com.korona.file_organizer.config.enums.impl;
 
-public enum OutputFlag implements Valued {
+public enum OutputTypeForStatsFlag implements Valued {
     LONG("--output"),
     SHORT("-o");
 
     private final String flag;
 
-    OutputFlag(String flag) {
+    OutputTypeForStatsFlag(String flag) {
         this.flag = flag;
     }
 

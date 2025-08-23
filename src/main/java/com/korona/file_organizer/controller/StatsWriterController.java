@@ -1,14 +1,14 @@
 package com.korona.file_organizer.controller;
 
+import com.korona.file_organizer.config.Config;
+import com.korona.file_organizer.config.enums.impl.OutputTypeForStats;
+import com.korona.file_organizer.mapper.DepartmentSalaryStatsMapper;
+import com.korona.file_organizer.model.DepartmentSalaryStats;
+import com.korona.file_organizer.service.DepartmentService;
+import com.korona.file_organizer.service.DepartmentStatsService;
 import com.korona.file_organizer.writer.OutputWriter;
 import com.korona.file_organizer.writer.impl.ConsoleWriter;
 import com.korona.file_organizer.writer.impl.FileWriter;
-import com.korona.file_organizer.mapper.DepartmentSalaryStatsMapper;
-import com.korona.file_organizer.config.Config;
-import com.korona.file_organizer.model.DepartmentSalaryStats;
-import com.korona.file_organizer.config.enums.impl.OutputTypeForStats;
-import com.korona.file_organizer.service.DepartmentService;
-import com.korona.file_organizer.service.DepartmentStatsService;
 import lombok.AllArgsConstructor;
 
 import java.util.Comparator;

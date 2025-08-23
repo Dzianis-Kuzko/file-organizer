@@ -1,15 +1,14 @@
 package com.korona.file_organizer.controller;
 
-import com.korona.file_organizer.constant.ProjectConstant;
-import com.korona.file_organizer.writer.OutputWriter;
-import com.korona.file_organizer.writer.impl.FileWriter;
+import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.mapper.EmployeeMapper;
 import com.korona.file_organizer.mapper.ManagerMapper;
-import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.model.Department;
 import com.korona.file_organizer.model.Employee;
 import com.korona.file_organizer.service.ComparatorFactory;
 import com.korona.file_organizer.service.DepartmentService;
+import com.korona.file_organizer.writer.OutputWriter;
+import com.korona.file_organizer.writer.impl.FileWriter;
 import lombok.AllArgsConstructor;
 
 import java.nio.file.Path;
@@ -51,7 +50,6 @@ public class DepartmentWriterController {
     }
 
     private Path buildFilePath(String departmentName) {
-        return Path.of(ProjectConstant.OUTPUT_FILES_DIR,
-                departmentName + ProjectConstant.FILE_EXTENSION);
+        return config.getOutputDir().resolve(departmentName + config.getFileExtension());
     }
 }

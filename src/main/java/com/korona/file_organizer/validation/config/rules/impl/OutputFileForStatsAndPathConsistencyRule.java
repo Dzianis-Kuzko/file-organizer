@@ -2,7 +2,7 @@ package com.korona.file_organizer.validation.config.rules.impl;
 
 import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.config.enums.impl.OutputTypeForStats;
-import com.korona.file_organizer.exceptions.ValidationException;
+import com.korona.file_organizer.exception.ValidationException;
 import com.korona.file_organizer.validation.config.rules.ValidationRule;
 
 public class OutputFileForStatsAndPathConsistencyRule implements ValidationRule {
@@ -13,8 +13,8 @@ public class OutputFileForStatsAndPathConsistencyRule implements ValidationRule 
         boolean hasPath = config.getOutputPathForStats().getValue() != null;
 
         if (isOutputTypeFile ^ hasPath) {
-            throw new ValidationException("If the output type is file," +
-                    " an output path must be specified, and vice versa.");
+            throw new ValidationException("Error. The output type is file and the output path " +
+                    "must be specified together or omitted.");
         }
     }
 }

@@ -10,6 +10,7 @@ import com.korona.file_organizer.parser.arg.ArgsParser;
 import com.korona.file_organizer.parser.arg.factory.ArgHandlerFactory;
 import com.korona.file_organizer.parser.line.LineParser;
 import com.korona.file_organizer.parser.line.factory.WorkerLineHandlerFactory;
+import com.korona.file_organizer.parser.line.handlers.WorkerLineHandler;
 import com.korona.file_organizer.reader.FileFinder;
 import com.korona.file_organizer.reader.FileReader;
 import com.korona.file_organizer.repository.DepartmentRepository;
@@ -23,53 +24,55 @@ import com.korona.file_organizer.validation.SalaryValidator;
 import com.korona.file_organizer.validation.config.ConfigValidator;
 import com.korona.file_organizer.validation.config.factory.ConfigValidatorFactory;
 
-public class Runner {
-    public static void main(String[] args) {
+import java.util.Map;
+
+public final class AppFactory {
+    private AppFactory() {
+        throw new UnsupportedOperationException("Utility class, should not be instantiated");
+    }
+
+    public static AppController createAppController(String[] args) {
         ArgsParser argsParser = new ArgsParser(ArgHandlerFactory.createHandlers());
         Config config = argsParser.parse(args);
 
         ConfigValidator configValidator = new ConfigValidator(ConfigValidatorFactory.createRules());
         configValidator.validate(config);
 
-
-
         InvalidDataRepository invalidDataRepo = new InvalidDataRepository();
         DepartmentRepository departmentRepo = new DepartmentRepository();
+        PendingDataRepository departmentPendingRepo = new PendingDataRepository();
 
         InvalidDataService invalidDataService = new InvalidDataService(invalidDataRepo);
-        DepartmentService departmentService = new DepartmentService(config, departmentRepo);
+        DepartmentService departmentService = new DepartmentService(departmentRepo);
         DepartmentStatsService departmentStatsService = new DepartmentStatsService();
+        PendingDataService pendingDataService = new PendingDataService(departmentPendingRepo, new SalaryValidator());
 
         FileFinder fileFinder = new FileFinder();
         FileReader fileReader = new FileReader();
-        LineParser lineParser = new LineParser(WorkerLineHandlerFactory.createWorkerLineHandlers());
 
+        Map<String, WorkerLineHandler> handlers = WorkerLineHandlerFactory.createWorkerLineHandlers();
+        LineParser lineParser = new LineParser(handlers);
 
         DataLoadingController dataLoadingController = new DataLoadingController(
                 fileFinder,
                 fileReader,
                 lineParser,
                 invalidDataService,
-                new PendingDataService(new PendingDataRepository(), new SalaryValidator()),
-                departmentService
-
+                pendingDataService,
+                departmentService,
+                config
         );
 
         DepartmentWriterController departmentWriterController = new DepartmentWriterController(departmentService, config);
-        InvalidDataWriterController invalidDataWriterController = new InvalidDataWriterController(invalidDataService);
+        InvalidDataWriterController invalidDataWriterController = new InvalidDataWriterController(invalidDataService, config);
         StatsWriterController statsWriterController = new StatsWriterController(departmentService, departmentStatsService, config);
 
-        new AppController(dataLoadingController, departmentWriterController, invalidDataWriterController, statsWriterController, config).process();
-
-
-        try {
-
-        } catch (IllegalArgumentException e) {
-            System.err.println("Ошибка параметров: " + e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.err.println("Неожиданная ошибка: " + e.getMessage());
-            e.printStackTrace();
-        }
+        return new AppController(
+                dataLoadingController,
+                departmentWriterController,
+                invalidDataWriterController,
+                statsWriterController,
+                config
+        );
     }
 }

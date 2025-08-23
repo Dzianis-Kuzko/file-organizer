@@ -1,4 +1,4 @@
-package com.korona.file_organizer.exceptions;
+package com.korona.file_organizer.exception;
 
 public class ValidationException extends RuntimeException {
     public ValidationException(String message) {

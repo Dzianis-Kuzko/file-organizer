@@ -1,6 +1,6 @@
 package com.korona.file_organizer.reader;
 
-import com.korona.file_organizer.exceptions.FileOperationException;
+import com.korona.file_organizer.exception.FileOperationException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 
 public class FileFinder {
 
-    public List<Path> findFiles(String dirPath, String fileExtension) {
-        try (Stream<Path> files = Files.list(Path.of(dirPath))) {
+    public List<Path> findFiles(Path path, String fileExtension) {
+        try (Stream<Path> files = Files.list(path)) {
             return files
                     .filter(Files::isRegularFile)
                     .filter(p -> p.getFileName().toString()
@@ -20,8 +20,7 @@ public class FileFinder {
                     .toList();
 
         } catch (IOException e) {
-            throw new FileOperationException(
-                    "Cannot access directory: " + dirPath, e);
+            throw new FileOperationException("Error. Cannot access directory: " + path, e);
         }
     }
 }

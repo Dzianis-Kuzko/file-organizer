@@ -2,7 +2,6 @@ package com.korona.file_organizer.repository;
 
 import com.korona.file_organizer.model.Employee;
 import com.korona.file_organizer.model.Manager;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 
-@ToString
 public class PendingDataRepository {
     private final Map<Integer, List<Employee>> employeesByManagerId = new HashMap<>();
     private final List<Manager> managers = new ArrayList<>();

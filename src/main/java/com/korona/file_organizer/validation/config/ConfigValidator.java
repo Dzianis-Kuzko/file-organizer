@@ -1,7 +1,7 @@
 package com.korona.file_organizer.validation.config;
 
 import com.korona.file_organizer.config.Config;
-import com.korona.file_organizer.exceptions.ValidationException;
+import com.korona.file_organizer.exception.ValidationException;
 import com.korona.file_organizer.validation.config.rules.ValidationRule;
 import lombok.AllArgsConstructor;
 

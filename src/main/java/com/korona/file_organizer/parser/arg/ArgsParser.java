@@ -1,6 +1,7 @@
 package com.korona.file_organizer.parser.arg;
 
 import com.korona.file_organizer.config.Config;
+import com.korona.file_organizer.parser.Parser;
 import com.korona.file_organizer.parser.arg.handlers.ArgHandler;
 import lombok.AllArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.util.Map;
  */
 
 @AllArgsConstructor
-public class ArgsParser {
+public class ArgsParser implements Parser<String[], Config> {
     public static final String KEY_VALUE_SEPARATOR = "=";
 
     private final Map<String, ArgHandler> handlers;

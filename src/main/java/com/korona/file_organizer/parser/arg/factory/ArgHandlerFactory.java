@@ -1,8 +1,8 @@
 package com.korona.file_organizer.parser.arg.factory;
 
 import com.korona.file_organizer.config.enums.impl.OrderFlag;
+import com.korona.file_organizer.config.enums.impl.OutputTypeForStatsFlag;
 import com.korona.file_organizer.config.enums.impl.OutputPathForStatsFlag;
-import com.korona.file_organizer.config.enums.impl.OutputTypeForStats;
 import com.korona.file_organizer.config.enums.impl.SortFlag;
 import com.korona.file_organizer.config.enums.impl.StatsFlag;
 import com.korona.file_organizer.config.enums.impl.Valued;
@@ -28,7 +28,7 @@ public final class ArgHandlerFactory {
         registerHandler(handlers, SortFlag.class, new SortHandler());
         registerHandler(handlers, OrderFlag.class, new OrderHandler());
         registerHandler(handlers, StatsFlag.class, new StatsHandler());
-        registerHandler(handlers, OutputTypeForStats.class, new OutputTypeForStatsHandler());
+        registerHandler(handlers, OutputTypeForStatsFlag.class, new OutputTypeForStatsHandler());
         registerHandler(handlers, OutputPathForStatsFlag.class, new OutputPathForStatsHandler());
 
         return Map.copyOf(handlers);

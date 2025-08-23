@@ -3,7 +3,7 @@ package com.korona.file_organizer.parser.arg.handlers.impl;
 import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.config.enums.impl.SortField;
 import com.korona.file_organizer.parser.arg.handlers.ArgHandler;
-import com.korona.file_organizer.util.ArgParserUtil;
+import com.korona.file_organizer.parser.arg.ArgParserUtil;
 
 import java.util.Optional;
 
@@ -12,13 +12,13 @@ public class SortHandler implements ArgHandler {
     @Override
     public void handle(String key, String value, Config config, int index) {
         if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Parameter " + key + " requires a value");
+            throw new IllegalArgumentException("Error. Parameter " + key + " requires a value");
         }
 
         Optional<SortField> sortField = ArgParserUtil.tryParseValue(value, SortField.class);
 
         if (sortField.isEmpty()) {
-            throw new IllegalArgumentException("Unsupported sorting type: " + value);
+            throw new IllegalArgumentException("Error. Unsupported sorting type: " + value);
         }
 
         config.setSortBy(sortField.get());

@@ -1,6 +1,6 @@
 package com.korona.file_organizer.controller;
 
-import com.korona.file_organizer.constant.ProjectConstant;
+import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.mapper.EmployeeMapper;
 import com.korona.file_organizer.model.Department;
 import com.korona.file_organizer.model.Employee;
@@ -25,6 +25,7 @@ public class DataLoadingController {
     private final InvalidDataService invalidDataService;
     private final PendingDataService pendingDataService;
     private final DepartmentService departmentService;
+    private final Config config;
 
     public void loadData() {
         loadWorkers();
@@ -33,7 +34,7 @@ public class DataLoadingController {
     }
 
     private void loadWorkers() {
-        fileFinder.findFiles(ProjectConstant.INPUT_FILES_DIR, ProjectConstant.FILE_EXTENSION)
+        fileFinder.findFiles(config.getInputDir(), config.getFileExtension())
                 .stream()
                 .flatMap(fileReader::readLines)
                 .forEach(this::processLine);
