@@ -1,0 +1,7 @@
+2025-08-24 19:33:22.175 [main] INFO  com.korona.file_organizer.Main - Starting application with args: []
+2025-08-24 19:33:22.207 [main] ERROR com.korona.file_organizer.Main - Known error occurred: 
+com.korona.file_organizer.exception.NoInputFilesException: Error. No input files with extension '.sb' were found in directory: .
+	at com.korona.file_organizer.controller.DataLoadingController.loadWorkers(DataLoadingController.java:43)
+	at com.korona.file_organizer.controller.DataLoadingController.loadData(DataLoadingController.java:33)
+	at com.korona.file_organizer.controller.AppController.process(AppController.java:16)
+	at com.korona.file_organizer.Main.main(Main.java:24)
