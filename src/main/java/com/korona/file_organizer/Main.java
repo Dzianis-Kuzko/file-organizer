@@ -2,6 +2,7 @@ package com.korona.file_organizer;
 
 import com.korona.file_organizer.controller.AppController;
 import com.korona.file_organizer.exception.FileOperationException;
+import com.korona.file_organizer.exception.NoInputFilesException;
 import com.korona.file_organizer.exception.ValidationException;
 import com.korona.file_organizer.writer.OutputWriter;
 import com.korona.file_organizer.writer.impl.ConsoleWriter;
@@ -22,7 +23,8 @@ public class Main {
                 AppController appController = AppFactory.createAppController(args);
                 appController.process();
 
-            } catch (IllegalArgumentException | FileOperationException | ValidationException e) {
+            } catch (IllegalArgumentException | FileOperationException | ValidationException |
+                     NoInputFilesException e) {
                 writer.writeLine(e.getMessage());
                 logger.error("Known error occurred: ", e);
             } catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.korona.file_organizer.controller;
 
 import com.korona.file_organizer.config.Config;
+import com.korona.file_organizer.exception.NoInputFilesException;
 import com.korona.file_organizer.mapper.EmployeeMapper;
 import com.korona.file_organizer.model.Department;
 import com.korona.file_organizer.model.Employee;
@@ -15,6 +16,7 @@ import com.korona.file_organizer.service.InvalidDataService;
 import com.korona.file_organizer.service.PendingDataService;
 import lombok.AllArgsConstructor;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @AllArgsConstructor
@@ -34,8 +36,17 @@ public class DataLoadingController {
     }
 
     private void loadWorkers() {
-        fileFinder.findFiles(config.getInputDir(), config.getFileExtension())
-                .stream()
+        List<Path> inputFiles = fileFinder.findFiles(config.getInputDir(), config.getFileExtension());
+
+        if (inputFiles.isEmpty()) {
+            throw new NoInputFilesException(String.format
+                    ("Error. No input files with extension '%s' were found in directory: %s",
+                            config.getFileExtension(),
+                            config.getInputDir())
+            );
+        }
+
+        inputFiles.stream()
                 .flatMap(fileReader::readLines)
                 .forEach(this::processLine);
     }

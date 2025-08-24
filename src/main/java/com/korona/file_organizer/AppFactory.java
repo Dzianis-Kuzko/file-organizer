@@ -6,6 +6,9 @@ import com.korona.file_organizer.controller.DataLoadingController;
 import com.korona.file_organizer.controller.DepartmentWriterController;
 import com.korona.file_organizer.controller.InvalidDataWriterController;
 import com.korona.file_organizer.controller.StatsWriterController;
+import com.korona.file_organizer.model.Employee;
+import com.korona.file_organizer.model.Manager;
+import com.korona.file_organizer.parser.Parser;
 import com.korona.file_organizer.parser.arg.ArgsParser;
 import com.korona.file_organizer.parser.arg.factory.ArgHandlerFactory;
 import com.korona.file_organizer.parser.line.LineParser;
@@ -20,9 +23,10 @@ import com.korona.file_organizer.service.DepartmentService;
 import com.korona.file_organizer.service.DepartmentStatsService;
 import com.korona.file_organizer.service.InvalidDataService;
 import com.korona.file_organizer.service.PendingDataService;
-import com.korona.file_organizer.validation.SalaryValidator;
+import com.korona.file_organizer.validation.Validator;
 import com.korona.file_organizer.validation.config.ConfigValidator;
 import com.korona.file_organizer.validation.config.factory.ConfigValidatorFactory;
+import com.korona.file_organizer.validation.worker.factory.WorkerValidatorFactory;
 
 import java.util.Map;
 
@@ -32,11 +36,14 @@ public final class AppFactory {
     }
 
     public static AppController createAppController(String[] args) {
-        ArgsParser argsParser = new ArgsParser(ArgHandlerFactory.createHandlers());
+        Parser<String[], Config> argsParser = new ArgsParser(ArgHandlerFactory.createHandlers());
         Config config = argsParser.parse(args);
 
-        ConfigValidator configValidator = new ConfigValidator(ConfigValidatorFactory.createRules());
+        Validator<Config> configValidator = new ConfigValidator(ConfigValidatorFactory.createRules());
         configValidator.validate(config);
+
+        Validator<Manager> managerValidator = WorkerValidatorFactory.createManagerValidator();
+        Validator<Employee> employeeValidator = WorkerValidatorFactory.createEmployeeValidator();
 
         InvalidDataRepository invalidDataRepo = new InvalidDataRepository();
         DepartmentRepository departmentRepo = new DepartmentRepository();
@@ -45,7 +52,10 @@ public final class AppFactory {
         InvalidDataService invalidDataService = new InvalidDataService(invalidDataRepo);
         DepartmentService departmentService = new DepartmentService(departmentRepo);
         DepartmentStatsService departmentStatsService = new DepartmentStatsService();
-        PendingDataService pendingDataService = new PendingDataService(departmentPendingRepo, new SalaryValidator());
+        PendingDataService pendingDataService = new PendingDataService(
+                departmentPendingRepo,
+                managerValidator,
+                employeeValidator);
 
         FileFinder fileFinder = new FileFinder();
         FileReader fileReader = new FileReader();

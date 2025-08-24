@@ -2,7 +2,8 @@ package com.korona.file_organizer.validation.config;
 
 import com.korona.file_organizer.config.Config;
 import com.korona.file_organizer.exception.ValidationException;
-import com.korona.file_organizer.validation.config.rules.ValidationRule;
+import com.korona.file_organizer.validation.ValidationRule;
+import com.korona.file_organizer.validation.Validator;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -12,8 +13,8 @@ import java.util.List;
  */
 
 @AllArgsConstructor
-public class ConfigValidator {
-    private final List<ValidationRule> rules;
+public class ConfigValidator implements Validator<Config> {
+    private final List<ValidationRule<Config>> rules;
 
     /**
      * Validates the given {@link Config} using all provided rules.

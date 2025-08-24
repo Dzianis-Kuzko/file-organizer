@@ -27,7 +27,6 @@ public class DepartmentWriterController {
 
     private void writeDepartmentToFile(Department department) {
         Path path = buildFilePath(department.getDepartmentName());
-
         try (OutputWriter writer = new FileWriter(path)) {
             writer.writeLine(ManagerMapper.mapToString(department.getManager()));
             writeEmployees(writer, department.getEmployees());

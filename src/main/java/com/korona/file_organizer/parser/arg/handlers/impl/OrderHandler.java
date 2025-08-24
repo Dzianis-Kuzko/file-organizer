@@ -12,7 +12,7 @@ public class OrderHandler implements ArgHandler {
     @Override
     public void handle(String key, String value, Config config, int index) {
         if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Parameter " + key + " requires a value");
+            throw new IllegalArgumentException("Error. Parameter " + key + " requires a value");
         }
 
         Optional<SortOrder> sortOrder = ArgParserUtil.tryParseValue(value, SortOrder.class);
