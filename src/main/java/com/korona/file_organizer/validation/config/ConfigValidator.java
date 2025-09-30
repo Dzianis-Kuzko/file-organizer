@@ -1,0 +1,28 @@
+package com.korona.file_organizer.validation.config;
+
+import com.korona.file_organizer.config.Config;
+import com.korona.file_organizer.exception.ValidationException;
+import com.korona.file_organizer.validation.ValidationRule;
+import com.korona.file_organizer.validation.Validator;
+import lombok.AllArgsConstructor;
+
+import java.util.List;
+
+/**
+ * Validates a {@link Config} instance against a set of {@link ValidationRule}.
+ */
+
+@AllArgsConstructor
+public class ConfigValidator implements Validator<Config> {
+    private final List<ValidationRule<Config>> rules;
+
+    /**
+     * Validates the given {@link Config} using all provided rules.
+     *
+     * @throws ValidationException if a validation rule fails
+     */
+
+    public void validate(Config config) {
+        rules.forEach(rule -> rule.validate(config));
+    }
+}

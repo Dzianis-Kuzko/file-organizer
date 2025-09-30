@@ -1,21 +1,36 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'com.korona'
 version = '1.0-SNAPSHOT'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'org.projectlombok:lombok:1.18.38'
-
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+ext {
+    lombokVersion = '1.18.38'
+    log4jVersion = '2.25.1'
 }
 
-test {
-    useJUnitPlatform()
+dependencies {
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+}
+
+shadowJar {
+    archiveFileName = 'app.jar'
+    manifest {
+        attributes(
+                'Main-Class': 'com.korona.file_organizer.Main'
+        )
+    }
 }
